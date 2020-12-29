@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<!-- ************************************************************************************************************************ -->
+		<!-- *******************************************     CSS CODE    ************************************************************ -->
+		<!-- ************************************************************************************************************************ -->
+		<meta name="viewport"content="width=device-width, initial-scale=1">
+		<style>
+			.collapsible {
+			background-color: #309986;
+			color: #a8ffef;
+			cursor: pointer;
+			padding: 18px;
+			width: 100%;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 15px;
+			margin-top: 1px; 
+			}
+			.active, .collapsible:hover {
+			background-color: #309986;
+			}
+			.collapsible:after {
+			content: '\002B';
+			color: #d3fff7;
+			font-weight: bold;
+			float: right;
+			margin-left: 5px;
+			}
+			.active:after {
+			content:"\2212";
+			}
+			.content {
+			padding: 0 18px;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.2s ease-out;
+			background-color: #d3fff7;
+			}
+			
+			table {
+			border-collapse: collapse;
+			width: 100%;
+			}
+			th {
+			background-color:#309986;
+			color:#a8ffef;
+			text-align: left;
+			padding: 8px;
+			font-weight:Normal;
+			}
+			td {
+			text-align: left;
+			padding: 8px;
+			}
+			tr:nth-child(even) {
+			background-color: #b6f6ea;
+			}
+			
+			a:link {color: #37a702}
+			a:visited {color: #123501}
+			a:hover {color: red}
+			a:active {color: #FF00CC}
+		</style>
+	</head>
+	<!-- ************************************************************************************************************************* -->
+	<!-- *******************************************     HTML BODY    ************************************************************ -->
+	<!-- ************************************************************************************************************************* -->
+	<body style="background-color:#a8ffef;color:#226b5e;">
+	<h1 style="color:black;" align="center">My Organization - My Bookmarks</h1>
+		
+		
+		<p id="demo" /> 
+		<!-- *************************************************************************************************************************** -->
+		<!-- *******************************************     JAVA SCRIPT    ************************************************************ -->
+		<!-- *************************************************************************************************************************** -->
+		<script>
+			
+			function inputJson() {
+				return `
+				{"My Work Sites":{
+					"My Work":[
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"https://www.google.com"},
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"https://www.bing.com"},
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"www.google.com"},
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"www.google.com"}
+					],
+					"My Extra Actvities":[
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"www.google.com"},
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"www.google.com"}
+					]
+				},
+				"Other Bookmarks": {
+					"Organization Sites":[
+					{"Bookmark":"Google","Description":"XXXXXXXXXXXXXXX","URL":"www.google.com"}
+					],
+					"Other Team Links":[
+					]	
+				}		
+				}`; 
+			}
+			
+			function tbrow(cell) {
+				return "<tr><td>" + cell + "</td></tr>";
+			}
+			
+			function my_page_load() {
+				var strJson = inputJson();
+				
+				var myObj, txt = "";
+				myObj = JSON.parse(strJson);
+				for (x in myObj) {
+					txt += "<h2>"+x+"</h2>";
+					for (y in myObj[x]) {
+						txt += "<button class='collapsible'>"+y+"</button> <div class='content'> <table><tr><th>Bookmark</th><th>Description</th><th>URL</th></tr>";
+						for (z in myObj[x][y])
+						{
+							txt += "<tr><td> <a href='" + myObj[x][y][z].URL + "'>" + myObj[x][y][z].Bookmark + "</a></td> <td>" +  myObj[x][y][z].Description + "</td> <td> " +  myObj[x][y][z].URL + "</td></tr>"
+						}
+						txt += "</table></div>";
+					}
+					document.getElementById("demo").innerHTML = txt;
+				}
+			}
+			
+			my_page_load()
+			
+			
+			var coll = document.getElementsByClassName("collapsible");
+			var i;
+			for (i = 0; i < coll.length; i++) {coll[i].addEventListener("click", function() {this.classList.toggle("active");var content = this.nextElementSibling;if (content.style.maxHeight){content.style.maxHeight = null;} else {content.style.maxHeight = content.scrollHeight +"px";} });};
+			
+		</script></body>
+</html>		
